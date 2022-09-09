@@ -1,7 +1,7 @@
 import { fetchGraphQL } from "../graphql/fetchGraphQL";
 
 const operationsDoc = `
-  mutation createBooking($input: [AddBookingInput!] = {time: "", guests: 10, name: "", phone: ""}) {
+  mutation createBooking($input: [AddBookingInput!]) {
     addBooking(input: $input) {
       numUids
     }
@@ -32,5 +32,9 @@ async function startExecuteCreateBooking(input: { time: string; guests: Number; 
 }
 
 export async function createBooking(input: { time: string; guests: Number; name: string; phone: string; }) {
+    if(input.name.length < 3 || input.phone.length != 10){
+        return false 
+    }
+    
     return await startExecuteCreateBooking(input)
 }
