@@ -49,7 +49,7 @@ export function CreateBooking()
         <>
         <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-                <DatePicker onChange={(date) => changeDate(date || new Date())} selected={date} />
+                <DatePicker onChange={(date) => changeDate(date || new Date())} selected={date} showTimeSelect />
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Control

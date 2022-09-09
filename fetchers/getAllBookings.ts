@@ -1,8 +1,8 @@
 import { fetchGraphQL } from "../graphql/fetchGraphQL";
 
 const operationsDoc = `
-  query GetAllBooks($gt: DateTime = "") {
-    queryBooking(filter: {time: {gt: $gt}}) {
+  query GetBookings($between: DateTimeRange = {min: "", max: ""}) {
+    queryBooking(filter: {time: {between: $between}}) {
       guests
       name
       phone
@@ -11,16 +11,19 @@ const operationsDoc = `
   }
 `;
 
-function fetchGetAllBooks(gt: string) {
+function fetchGetBookings(between: {min: string, max: string}) {
   return fetchGraphQL(
     operationsDoc,
-    "GetAllBooks",
-    {"gt": gt}
+    "GetBookings",
+    {"between": between}
   );
 }
 
-async function GetAllBooks(gt: Date) {
-  const { errors, data } = await fetchGetAllBooks(gt.toISOString());
+export async function startFetchGetBookings(between: {min: string, max: string}) {
+
+    
+
+  const { errors, data } = await fetchGetBookings(between);
 
   if (errors) {
     // handle those errors like a pro
@@ -28,5 +31,5 @@ async function GetAllBooks(gt: Date) {
   }
 
   // do something great with this precious data
-  return data;
+  return data.queryBooking
 }

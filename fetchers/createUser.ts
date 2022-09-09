@@ -26,7 +26,7 @@ async function startExecuteAddUser(billingAddress: string, mailingAddress: strin
     }
 
     // do something great with this precious data
-    return data.addUser.numUids
+    return data.addUser.numUids == 1
 }
   
 export async function createUser(billingAddress: string, mailingAddress: string, name: string, preferredPaymentMethod: string)

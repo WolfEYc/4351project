@@ -1,15 +1,20 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import { CreateBooking } from '../components/createBooking'
-import styles from '../styles/Home.module.css'
+import { CreateUser } from '../components/createUser'
+import { GetBookings } from '../components/getBookings'
+import { SetPoints } from '../components/setPoints'
 
 const Home: NextPage = () => {
   return (
-    <>
-        <CreateBooking />    
-
-    </>
+    <div>
+        <CreateBooking />
+        <br />
+        <CreateUser />
+        <br />
+        <SetPoints />
+        <br />
+        <GetBookings />
+    </div>
   )
 }
 
