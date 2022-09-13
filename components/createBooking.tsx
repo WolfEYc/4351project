@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Button, Form } from "react-bootstrap";
+import { GetNumBookings } from "../fetchers/getNumBookings";
 
 export function CreateBooking()
 {
@@ -12,6 +13,7 @@ export function CreateBooking()
     const [guestCount, changeGuestCount] = useState(1)
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
+    const [email, setEmail] = useState("")
 
     const handleChangeGuestCount = (event: any) => {
         changeGuestCount(event.target.valueAsNumber);
@@ -25,6 +27,10 @@ export function CreateBooking()
         setPhone(event.target.value.toString());
     };
 
+    const handleEmailChange = (event: any) => {
+        setEmail(event.target.value);
+    }
+
     useEffect(() => {
         setName(localStorage.getItem("name") || "")
     }, [])
@@ -32,17 +38,27 @@ export function CreateBooking()
     const handleSubmit = async (event: any) => {
         event.preventDefault()
 
-        const success = await createBooking({ time: date.toISOString(), guests: guestCount, name: name, phone: phone })
+        const needPopUp = await GetNumBookings(date);
+
+        let okToBook = true;
+
+        if(needPopUp > 15){
+            okToBook = confirm("We will charge $10 for a no show on this day due to a surge in bookings")
+        }
+
+        if(!okToBook) return;
+
+        const success = await createBooking({ time: date.toISOString(), guests: guestCount, name: name, phone: phone, email: email })
+        
 
         if(success)
         {
             alert("Created booking successfully")
-        } else 
+        }
+        else 
         {
             alert("Failed to create booking")
         }
-
-        
     }
     
     return (
@@ -73,6 +89,14 @@ export function CreateBooking()
                     placeholder="phone number"
                     value={phone}
                     onChange={handlePhoneChange}
+                />
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Control
+                    type="text"
+                    placeholder="email"
+                    value={email}
+                    onChange={handleEmailChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3">

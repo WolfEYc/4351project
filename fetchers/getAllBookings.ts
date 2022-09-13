@@ -21,14 +21,14 @@ function fetchGetBookings(between: {min: string, max: string}) {
 
 export async function startFetchGetBookings(between: {min: string, max: string}) {
 
-    
-
   const { errors, data } = await fetchGetBookings(between);
 
   if (errors) {
     // handle those errors like a pro
     console.error(errors);
   }
+
+  console.log(data)
 
   // do something great with this precious data
   return data.queryBooking

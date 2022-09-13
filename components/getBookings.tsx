@@ -12,7 +12,7 @@ export function GetBookings()
 
     useEffect(() => {
         var now = new Date();
-        // Add two weeks
+        
         now.setDate(now.getDate() + 1);
 
         GetBookings(now);
