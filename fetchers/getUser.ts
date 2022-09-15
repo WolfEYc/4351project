@@ -1,11 +1,11 @@
 import { fetchGraphQL } from "../graphql/fetchGraphQL";
 
+export let User: { billingAddress: string,  mailingAddress: string, name: string, points: string, preferredPaymentMethod: string }
 
 const operationsDoc = `
-  query GetUser($id: ID! = "") {
-    getUser(id: $id) {
+  query MyQuery($eq: String = "") {
+    queryUser(filter: {mailingAddress: {eq: $eq}}) {
       billingAddress
-      mailingAddress
       name
       points
       preferredPaymentMethod
@@ -13,30 +13,41 @@ const operationsDoc = `
   }
 `;
 
-function fetchGetUser(id: string) {
+function fetchMyQuery(eq: any) {
   return fetchGraphQL(
     operationsDoc,
-    "GetUser",
-    {"id": id}
+    "MyQuery",
+    {"eq": eq}
   );
 }
 
-async function startFetchGetUser(id: string) {
-  const { errors, data } = await fetchGetUser(id);
+async function startFetchMyQuery(eq: any) {
+  const { errors, data } = await fetchMyQuery(eq);
 
   if (errors) {
     // handle those errors like a pro
     console.error(errors);
-
-    return false
   }
 
   // do something great with this precious data
-
-  return data.getUser
+  return data.queryUser;
 }
 
 
-export async function getUser(id: string) {
-    return await startFetchGetUser(id)
+
+export async function getUser() {
+
+    let mailingAddress = localStorage.getItem("mailing");
+
+    if(!User && mailingAddress)
+    {
+        let arr = await startFetchMyQuery(mailingAddress);
+
+        if(arr.length == 0) return User;
+
+        User = arr[0];
+        User.mailingAddress = mailingAddress;
+    }
+
+    return User;
 }

@@ -40,6 +40,7 @@ export function GetBookings()
         <th>Guests</th>
         <th>Name</th>
         <th>Phone No</th>
+        <th>Email</th>
       </tr>
     </thead>
     <tbody>

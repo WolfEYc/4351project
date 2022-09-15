@@ -7,6 +7,7 @@ const operationsDoc = `
       name
       phone
       time
+      email
     }
   }
 `;

@@ -31,6 +31,8 @@ async function startExecuteAddUser(billingAddress: string, mailingAddress: strin
   
 export async function createUser(billingAddress: string, mailingAddress: string, name: string, preferredPaymentMethod: string)
 {
+    localStorage.setItem("mailing", mailingAddress);
+
     return await startExecuteAddUser(billingAddress, mailingAddress, name, preferredPaymentMethod);
 }
   

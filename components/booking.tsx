@@ -1,7 +1,7 @@
 
 
 
-export function Booking(props: {time: string, guests: number, name: string, phone: number, number: number })
+export function Booking(props: {time: string, guests: number, name: string, phone: number, number: number, email: string })
 {
     return <tr>
         <td>{ props.number }</td>
@@ -9,5 +9,6 @@ export function Booking(props: {time: string, guests: number, name: string, phon
         <td>{props.guests}</td>
         <td>{props.name}</td>
         <td>{props.phone}</td>
+        <td>{props.email}</td>
     </tr>
 }
